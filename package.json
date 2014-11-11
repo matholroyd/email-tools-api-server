@@ -1,0 +1,26 @@
+{
+  "name": "email-tools-api-server",
+  "version": "1.0.0",
+  "description": "Backend API for Email Tools extension for Chrome",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/matholroyd/email-tools-api-server.git"
+  },
+  "author": "Mat Holroyd",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/matholroyd/email-tools-api-server/issues"
+  },
+  "homepage": "https://github.com/matholroyd/email-tools-api-server",
+  "dependencies": {
+    "hapi": "^7.5.0",
+    "mysql": "^2.5.3",
+    "sequelize": "^2.0.0-rc1",
+    "sequelize-cli": "^0.3.3",
+    "sqlite3": "^3.0.2"
+  }
+}
