@@ -2,6 +2,7 @@ var Hapi = require('hapi');
 var server = new Hapi.Server('localhost', 8000);
 var models = require("./models");
 var DOMAIN = "tworgy.com";
+var crypto = require('crypto');
 
 models.sequelize.sync().success(function () {
   // console.log("Delete all users to begin with for development");
@@ -15,7 +16,7 @@ models.sequelize.sync().success(function () {
     method: 'GET',
     path: '/create-new-account',
     handler: function (request, reply) {
-      var api_key = '12345-67890';
+      var api_key = crypto.randomBytes(20).toString('hex');
       
       models.User.create({
         username: null,
