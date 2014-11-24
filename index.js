@@ -35,16 +35,22 @@ models.sequelize.sync().success(function () {
     handler: function (request, reply) {
       models.User.find({api_key: request.params.api_key}).complete(function(err, user) {
         if(user !== undefined && user !== null) {
-          models.VirtualAlias.count().success(function(count) {
-            var email = "alias_" + (count + 1) + "@" + user.domain;
+          if(user.username === "") {
+            reply({success: false, error: "Must set a username in options before generating an email"});
+          } else if(user.email === "") {
+            reply({success: false, error: "Must set a forwarding email address in options before generating an email"});
+          } else {
+            models.VirtualAlias.count().success(function(count) {
+              var email = "alias_" + (count + 1) + "@" + user.domain;
             
-            models.VirtualAlias.create({incoming_email: email, UserId: user.id});
-            reply(email);
-            console.log("Generate email => " + email);
-          })
+              models.VirtualAlias.create({incoming_email: email, UserId: user.id});
+              console.log("Generate email => " + email);
+              reply({success: true, email: email});
+            })
+          }
         } else {
           console.log("Could not find user to generate email");
-          reply(null);
+          reply({success: false, error: "Could not find user to generate email for."});
         }
       });
       
